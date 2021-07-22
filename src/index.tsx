@@ -13,13 +13,50 @@ export type MemeGeneratorProps = React.HTMLAttributes<HTMLDivElement> & {
 const DEFAULT_MEME_API_URL = 'https://api.imgflip.com/get_memes'
 
 const useStyles = createUseStyles({
-  selection: {},
+  selection: {
+    display: 'flex'
+  },
   form: {},
-  imgs: {},
-  img: {},
-  meme: {},
-  top: {},
-  bottom: {}
+  imgs: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  img: {
+    height: '100px'
+  },
+  selected: {
+    border: '3px solid #7DF9FF'
+  },
+  meme: {
+    position: 'relative',
+    width: '59%',
+    margin: 'auto',
+
+    '&>img': {
+      width: '100%'
+    },
+    '&>h2': {
+      position: 'absolute',
+      width: '80%',
+      textAlign: 'center',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      margin: '15px 0',
+      padding: '0 5px',
+      fontFamily: 'impact, sans-serif',
+      fontSize: '1em',
+      textTransform: 'uppercase',
+      color: 'white',
+      letterSpacing: '1px',
+      textShadow: '2px 2px 0 #000'
+    }
+  },
+  top: {
+    top: '0'
+  },
+  bottom: {
+    bottom: '0'
+  }
 })
 
 export const MemeGenerator: React.FC<MemeGeneratorProps> = ({
@@ -62,6 +99,15 @@ export const MemeGenerator: React.FC<MemeGeneratorProps> = ({
   return (
     <div {...divProps}>
       <div className={classes.selection}>
+        <div className={classes.imgs}>
+          {memes.map((url) => (
+            <img
+              className={classes.img}
+              onClick={() => setSelectedMeme(url)}
+              src={url}
+            />
+          ))}
+        </div>
         <form
           className={classes.form}
           onSubmit={(e) => {
@@ -84,15 +130,6 @@ export const MemeGenerator: React.FC<MemeGeneratorProps> = ({
           />
           <button>Generate</button>
         </form>
-        <div className={classes.imgs}>
-          {memes.map((url) => (
-            <img
-              className={classes.img}
-              onClick={() => setSelectedMeme(url)}
-              src={url}
-            />
-          ))}
-        </div>
       </div>
       <br />
       <div className={classes.meme}>
